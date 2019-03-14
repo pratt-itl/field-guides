@@ -60,14 +60,10 @@
   <div class="row-fluid post-full">
     <div class="span12">
       <div class="content">
-        {{ content }}
-
-        <!-- CARDS -->
-        <br>
-        <h2 class="heading-home">Research</h2>
+        <h2 class="heading-home">Processes</h2>
         <div id="procCards" class="card-columns">
           <!-- PROCESSES -->
-          {% assign processes = site.pages | where: "category", "Research" %}
+          {% assign processes = site.pages | where: "category", "Processes" %}
           {% for proc in processes %}
           {% if proc.sketchfabUUID %}
           <script defer>       
@@ -89,6 +85,57 @@
           {% endif %}
           {% endfor %}
         </div>
+        <h2 class="heading-home">Platforms</h2>
+        <div id="platCards" class="card-columns">
+          <!-- PLATFORMS -->
+          {% assign platforms = site.pages | where: "category", "Platforms" %}
+          {% for plat in platforms %}
+          {% if plat.sketchfabUUID %}
+          <script defer>
+            window.CreateSketchfabCard('{{ plat.title }}',
+              '{{ plat.description }}',
+              '{{ plat.url }}',
+              '{{ plat.sketchfabUUID }}',
+              'platCards');
+          </script>
+          {% else %}
+          <script defer>
+            window.CreateImageCard('{{ plat.title }}',
+              '{{ plat.description }}',
+              '{{ plat.url }}',
+              '{{ plat.dir }}',
+              '{{ plat.thumb }}',
+              'platCards');
+          </script>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <h2 class="heading-home">Projects</h2>
+        <div id="projCards" class="card-columns">
+          <!-- PROJECTS -->
+          {% assign projects = site.pages | where: "category", "Projects" %}
+          {% for proj in projects %}
+          {% if proj.sketchfabUUID %}
+          <script defer>
+            window.CreateSketchfabCard('{{ proj.title }}',
+              '{{ proj.description }}',
+              '{{ proj.url }}',
+              '{{ proj.sketchfabUUID }}',
+              'projCards');
+          </script>
+          {% else %}
+          <script defer>
+            window.CreateImageCard('{{ plat.title }}',
+              '{{ proj.description }}',
+              '{{ proj.url }}',
+              '{{ proj.dir }}',
+              '{{ proj.thumb }}',
+              'projCards');
+          </script>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <!-- {{ content }} -->
       </div>
     </div>
   </div>
