@@ -1,0 +1,23 @@
+<!-- CONTENT -->
+
+<body style="background-image: url(./assets/images/global/white.png)">
+  <div class="container container-narrow">
+    <div class="content">
+      <div class="row-fluid post-full">
+        <div class="span12">
+          <div class="content" style="padding-top: 23%">
+            <h1>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h1>
+            <br>
+            {{ content }}
+          </div>
+          
+          <hr>
+          <footer>
+            <p><small>
+                <a href="https://itl.pratt.edu">Interdisciplinary Technology Lab</a>
+                <br>Field Guide v.0.12
+              </small></p>
+          </footer>
+        </div>
+      </div>
+</body>

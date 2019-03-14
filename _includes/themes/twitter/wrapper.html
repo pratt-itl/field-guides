@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title }}</title>
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}">{% endif %}
+  <meta name="author" content="{{ site.author.name }}">
+
+  <!-- Enable responsive viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Pass jekyll template into global scope -->
+  <script>
+    window.basePath = "{{ BASE_PATH }}";
+  </script>
+
+  <!-- 
+"jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min",
+"bootstrap": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min",
+"firebase" : "https://www.gstatic.com/firebasejs/5.8.3/firebase",
+"moment" : "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment",
+"blueImp" : "https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.1.0/js/md5",
+"mCustomScrollbar" : "https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min",
+"popper" : "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper",
+"sideComments" : window.basePath + "/scripts/js/sideComments/side-comments",
+"jsTree" : window.basePath + "/scripts/js/jstree/jstree.min",
+"inView" : window.basePath + "/scripts/js/in-view/in-view.min",
+"lodash" : "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min" -->
+
+  <!-- Libs -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.js"></script>
+  <script src="{{ BASE_PATH }}/scripts/js/jstree/jstree.min.js"></script>
+  <script src="{{ BASE_PATH }}/scripts/js/in-view/in-view.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+<script>
+    $(function(){
+
+    initJsTree();
+    initMCustomScrollbar();
+
+    function initJsTree(){
+      // $('#jsTreeNav').jstree();
+      $('#jsTreeNav')
+        // listen for event
+        .on('select_node.jstree', function (e, data) {
+          console.log("Tree item selected", data.node.a_attr.href);
+          if(data.node.a_attr.href != "" && data.node.a_attr.href != "#"){ window.location.href = data.node.a_attr.href; }
+        })
+        .on('click', '.jstree-anchor', function (e) {
+          $('#jsTreeNav').jstree(true).toggle_node(e.target);
+        })
+        // create the instance
+        .jstree({
+          // core : {
+          //   dblclick_toggle : false
+          // }
+        });
+    }
+    function initMCustomScrollbar(){
+    $("#sidebar").mCustomScrollbar({
+              theme: "minimal"
+          });
+          $('#sidebarCollapse').on('click', function () {
+              // open or close navbar
+              $('#sidebar').toggleClass('active');
+    
+              // move the open-close button
+              $('#openSidebar').toggleClass('fixedRightOver')
+    
+              // close dropdowns
+              $('.collapse.in').toggleClass('in');
+              // and also adjust aria-expanded attributes we use for the open/closed arrows
+              // in our CSS
+              $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+          });
+    }    
+  });
+  
+  </script>
+
+
+  <!-- Le styles -->
+  <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+  <link href="{{ ASSET_PATH }}/css/fonts.css" rel="stylesheet" type="text/css" media="all">
+  <link href="{{ ASSET_PATH }}/css/images.css" rel="stylesheet" type="text/css" media="all">
+  <link href="{{ BASE_PATH }}/assets/themes/scripts/vakata-tree/themes/default/style.css" rel="stylesheet" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+
+  <!-- CustomScrollbar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+
+</head>
+
+<body>
+  <!-- SIDEBAR AND CONTENT -->
+  <div class="wrapper">
+
+    <!-- SIDEBAR -->
+    <nav id="sidebar" class="active">
+      <h4 class="sidenav-Header">Navigation</h4>
+      <div>
+        <div id="jsTreeNav" class="sidenav">
+          <ul>
+            {% assign myCats = site.pages | group_by: 'category' %}
+            {% for cat in myCats %}
+            <!-- Create the category header -->
+            {% if cat.name != "" %}
+            <li data-jstree='{"opened":true, "icon":"fa fa-cubes"}'>{{ cat.name}}
+              <ul>
+                {% assign subCats = cat.items | group_by: 'subcategory' %}
+                {% for subcat in subCats %}
+
+                {% if subcat.name != "None" %}
+
+                {% assign items = subcat.items | sort: 'order' %}
+
+                <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }}
+                  <ul>
+                    {% for item in items %}
+
+                      <!-- CATEGORY ICON -->
+                      {% case cat.name %}
+                      {% when 'Research' %}
+                      {% assign myIcon = '"fa fa-code-branch"' %}
+                      {% when 'OtherCat' %}
+                      {% assign myIcon = '"fa fa-link"' %}
+                      {% when 'OtherCat2' %}
+                      {% assign myIcon = '"fa fa-project-diagram"' %}
+                      {% else %}
+                      {% assign myIcon = "fa fa-book" %}
+                      {% endcase %}
+                      <!-- PAGE ICON -->
+                      {% if item.url == page.url %}
+                      <li data-jstree='{"selected":true,"icon":{{ myIcon }} }' class="nav-item current newItem"><a>{{
+                          item.title }}</a></li>
+                      {% else %}
+                      <li data-jstree='{"icon":{{ myIcon }} }' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
+                          item.title }}</a></li>
+                      {% endif %}
+
+                    {% endfor %}
+
+                  </ul>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+    <!-- CONTENT (post.html, home.html, etc.) -->
+    <div id="content">
+      <!-- SIDEBAR BUTTON -->
+      <div id="openSidebar">
+        <button id="sidebarCollapse" class="btn btn-outline-secondary my-2 my-sm-0" type="button">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="bottom-right">
+        <img src="https://lelandjobson.github.io/github_pages_tut_01/assets/images/global/itl_black_clear.png">
+      </div>
+      <!-- CONTENT -->
+      <div class="container container-narrow">
+
+        <!-- TOP NAV -->
+        <nav class="navbar navbar-expand-lg navbar-light topnav bg-light">
+
+          <a class="navbar-brand" href="{{ BASE_PATH }}">ITL x MAG</a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarText" style="">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+        {{ content }}
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
