@@ -180,6 +180,11 @@ th {
 
 a {
   color: #000000 !important;
+  text-decoration: underline;
+}
+
+nav a {
+  text-decoration: none; 
 }
 
 .principleDescription {
@@ -608,4 +613,12 @@ li a {
 
 .card {
   /* border: 0 */
+}
+
+.alert-light {
+  color: #000000;
+  background-color: #fefefe;
+  border-color: #909090;
+  margin: 40px;
+
 }
