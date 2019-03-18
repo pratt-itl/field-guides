@@ -226,6 +226,16 @@ function initOther(){
 
     //applyModalBlowups();
 
+    // Dynamically add ids to headings
+    $(document).ready(function() {
+        $("content h1, content h2, content h3, content h4, content h5, content h5").each(function(i) {
+        var heading = $(this);
+        var headingtext = heading.text().toLowerCase().trim().replace(/[\.,-\/#!?$%\^&\*;:{}=\-_`~()]/g,"");
+        heading.attr("id",headingtext );
+    });
+    });
+
+
     function applyModalBlowups(){
         // Get the modal
         $(function () {

@@ -592,6 +592,10 @@ li a {
   font-size: 1.1rem;
 }
 
+.card-header a {
+  text-decoration: none;
+}
+
 .card-home p{
   font-size: 1rem;
   padding: 5px;
@@ -600,9 +604,10 @@ li a {
 }
 
 .card-home .card-header {
-    padding: 0 !important;
-    background-color: white !important;
-    border-bottom: none;
+  padding: 2px;
+  padding-top: 7px;
+  background-color: white !important;
+  border-bottom: none;
 }
 
 .card-img-top {
