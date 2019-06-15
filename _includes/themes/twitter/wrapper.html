@@ -90,7 +90,10 @@
     <!-- SIDEBAR -->
     <nav id="sidebar">
       <div id="sidebar-content">
-        <h4 style="padding-left: 20px; padding-bottom: 20px;">Navigation</h4>
+        <div style="padding-left: 20px; padding-bottom: 20px;">
+            <h4>Navigation</h4>
+        </div>
+        <!-- TREE NAVIGATION -->
         <div id="jsTreeNav" class="sidenav">
             <ul>
               {% assign myCats = site.pages | group_by: 'category' %}
