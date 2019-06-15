@@ -10,6 +10,7 @@
 
   <!-- Enable responsive viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
   <!-- Pass jekyll template into global scope -->
   <script>
     window.basePath = "{{ BASE_PATH }}";
@@ -26,119 +27,154 @@
   <link href="{{ BASE_PATH }}/assets/themes/scripts/vakata-tree/themes/default/style.css" rel="stylesheet" />
 
   <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
   <!-- SideComments -->
   <link href="{{ BASE_PATH }}/comments/side-comments.css" rel="stylesheet" />
   <link href="{{ BASE_PATH }}/comments/themes/default-theme.css" rel="stylesheet" />
 
   <!-- CustomScrollbar -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
   <!-- IsInIframe -->
   <script>
-      (function inIframe () {
-        try {
-          Window.IsInIframe = window.self !== window.top;
-        } catch (e) {
-            Window.IsInIframe = true;
-        }
-      })();
+    (function inIframe() {
+      try {
+        Window.IsInIframe = window.self !== window.top;
+      } catch (e) {
+        Window.IsInIframe = true;
+      }
+    })();
   </script>
+
+  <!-- Open and close sidebar -->
+  <script>
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+    function openNav() {
+      document.getElementById("sidebar").style.width = "350px";
+      document.getElementById("content").style.marginLeft = "225px";
+      document.getElementById("sidebarCollapse").onclick = closeNav;
+      document.getElementById("openSidebar").style.left = "290px";
+      document.getElementById("openSidebar").style.top = "20px";
+      document.getElementById("sidebarBtn").classList.remove("fa-bars");
+      document.getElementById("sidebarBtn").classList.add("fa-times");
+      // if (window.innerWidth < 1400) {
+      //   document.getElementById("magCards").classList.remove('card-deck');
+      //   document.getElementById("magCards").classList.add('card-columns');
+      // }
+    }
+
+    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+      document.getElementById("content").style.marginLeft = "0";
+      document.getElementById("sidebarCollapse").onclick = openNav;
+      document.getElementById("openSidebar").style.left = "20px";
+      document.getElementById("openSidebar").style.top = "20px";
+      document.getElementById("sidebarBtn").classList.remove("fa-times");
+      document.getElementById("sidebarBtn").classList.add("fa-bars");
+      // if (window.innerWidth < 1400) {
+      //   document.getElementById("magCards").classList.add('card-deck');
+      //   document.getElementById("magCards").classList.remove('card-columns');
+      // }
+    }
+  </script>
+
 </head>
 
 <body>
+
   <!-- SIDEBAR AND CONTENT -->
   <div class="wrapper">
 
     <!-- SIDEBAR -->
-    <nav id="sidebar" class="active">
-      <h4 style="padding-left: 20px; padding-bottom: 20px;">Navigation</h4>
-      <div>
+    <nav id="sidebar">
+      <div id="sidebar-content">
+        <h4 style="padding-left: 20px; padding-bottom: 20px;">Navigation</h4>
         <div id="jsTreeNav" class="sidenav">
-          <ul>
-            {% assign myCats = site.pages | group_by: 'category' %}
-            {% for cat in myCats %}
-            <!-- Create the category header -->
-            {% if cat.name != "" %}
-            <li data-jstree='{"opened":true, "icon":"fa fa-cubes"}'>{{ cat.name}}
-              <ul>
-                {% assign subCats = cat.items | group_by: 'subcategory' %}
-                {% for subcat in subCats %}
+            <ul>
+              {% assign myCats = site.pages | group_by: 'category' %}
+              {% for cat in myCats %}
+              <!-- Create the category header -->
+              {% if cat.name != "" %}
+              <li data-jstree='{"opened":true, "icon":"fa fa-cubes"}'>{{ cat.name}}
+                <ul>
+                  {% assign subCats = cat.items | group_by: 'subcategory' %}
+                  {% for subcat in subCats %}
 
-                {% if subcat.name != "None" %}
+                  {% if subcat.name != "None" %}
 
-                {% assign items = subcat.items | sort: 'order' %}
+                  {% assign items = subcat.items | sort: 'order' %}
 
-                {% if page.field-guide == subcat.name %}
-                <li data-jstree='{"opened":true, "icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name
+                  {% if page.field-guide == subcat.name %}
+                  <li data-jstree='{"opened":true, "icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name
                   }}
-                  {% else %}
-                <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }}
-                  {% endif %}
-                  <ul>
-                    {% for item in items %}
-                    <!-- {% capture nowunix %}{{'now' | date: '%s'}}{% endcapture %} -->
-
-                    {% if item.title == "Quick Start" %}
-
-                    {% if item.url == page.url %}
-                    <li data-jstree='{"selected":true,"icon":"fa fa-bolt"}' class="nav-item current newItem"><a>{{
-                        item.title }}</a></li>
                     {% else %}
-                    <li data-jstree='{"icon":"fa fa-bolt"}' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
-                        item.title }}</a></li>
+                  <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }}
                     {% endif %}
+                    <ul>
+                      {% for item in items %}
+                      <!-- {% capture nowunix %}{{'now' | date: '%s'}}{% endcapture %} -->
 
-                    {% else %}
+                      {% if item.title == "Quick Start" %}
 
-                    {% case cat.name %}
-                    {% when 'Principles' %}
-                    {% assign myIcon = '"fa fa-code-branch"' %}
-                    {% when 'Processes' %}
-                    {% assign myIcon = '"fa fa-link"' %}
-                    {% when 'Projects' %}
-                    {% assign myIcon = '"fa fa-project-diagram"' %}
-                    {% when 'Platforms' %}
-                    {% capture myIcon %}
-                    "{{ BASE_PATH }}{{ item.dir }}/{{ item.title | downcase }}.png"
-                    {% endcapture %}
-                    {% else %}
-                    {% assign myIcon = "fa fa-book" %}
-                    {% endcase %}
-
-                    {% if item.url == page.url %}
-                    <li data-jstree='{"selected":true,"icon":{{ myIcon }} }' class="nav-item current newItem"><a>{{
+                      {% if item.url == page.url %}
+                      <li data-jstree='{"selected":true,"icon":"fa fa-bolt"}' class="nav-item current newItem"><a>{{
                         item.title }}</a></li>
-                    {% else %}
-                    <li data-jstree='{"icon":{{ myIcon }} }' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
+                      {% else %}
+                      <li data-jstree='{"icon":"fa fa-bolt"}' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
                         item.title }}</a></li>
+                      {% endif %}
+
+                      {% else %}
+
+                      {% case cat.name %}
+                      {% when 'Principles' %}
+                      {% assign myIcon = '"fa fa-code-branch"' %}
+                      {% when 'Processes' %}
+                      {% assign myIcon = '"fa fa-link"' %}
+                      {% when 'Projects' %}
+                      {% assign myIcon = '"fa fa-project-diagram"' %}
+                      {% when 'Platforms' %}
+                      {% capture myIcon %}
+                      "{{ BASE_PATH }}{{ item.dir }}/{{ item.title | downcase }}.png"
+                      {% endcapture %}
+                      {% else %}
+                      {% assign myIcon = "fa fa-book" %}
+                      {% endcase %}
+
+                      {% if item.url == page.url %}
+                      <li data-jstree='{"selected":true,"icon":{{ myIcon }} }' class="nav-item current newItem"><a>{{
+                        item.title }}</a></li>
+                      {% else %}
+                      <li data-jstree='{"icon":{{ myIcon }} }' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
+                        item.title }}</a></li>
+                      {% endif %}
+
+                      {% endif %}
+
+                      {% endfor %}
+
+                    </ul>
                     {% endif %}
-
-                    {% endif %}
-
-                    {% endfor %}
-
-                  </ul>
-                  {% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-            </li>
-            {% endif %}
-            {% endfor %}
-          </ul>
-        </div>
-
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
       </div>
     </nav>
     <!-- CONTENT (post.html, home.html, etc.) -->
     <div id="content">
       <!-- SIDEBAR BUTTON -->
       <div id="openSidebar">
-        <button id="sidebarCollapse" class="btn btn-outline-secondary my-2 my-sm-0" type="button">
-          <i class="fa fa-bars"></i>
+        <button onclick="openNav()" id="sidebarCollapse" class="btn btn-outline-secondary my-2 my-sm-0" type="button">
+          <i id="sidebarBtn" class="fa fa-bars"></i>
         </button>
       </div>
 
