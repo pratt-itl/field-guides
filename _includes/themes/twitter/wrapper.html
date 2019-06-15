@@ -91,7 +91,7 @@
     <nav id="sidebar">
       <div id="sidebar-content">
         <div style="padding-left: 20px; padding-bottom: 20px;">
-            <h4>Navigation</h4>
+            <h4>Field Guides</h4>
         </div>
         <!-- TREE NAVIGATION -->
         <div id="jsTreeNav" class="sidenav">
@@ -111,9 +111,9 @@
 
                   {% if page.field-guide == subcat.name %}
                   <li data-jstree='{"opened":true, "icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name
-                  }}
+                  }} Guides
                     {% else %}
-                  <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }}
+                  <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }} Guides
                     {% endif %}
                     <ul>
                       {% for item in items %}

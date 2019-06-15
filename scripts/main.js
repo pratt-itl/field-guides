@@ -62,6 +62,7 @@ function   ($,        bootstrap,   jsTree,   sideComments,   firebase,   moment,
     initMCustomScrollbar($, mCustomScrollbar);
     initOther($);
     initCommentableSections($,sideComments, firebase);
+    // applyStickiesToHeaders($); Disabled due to page size changes
 });
 
 function initCommentableSections($, SideComments, firebase){
@@ -220,6 +221,81 @@ function slugify(text) {
 // Gets the current window path
 function getPostLoc(){
     return slugify(window.location.pathname + '/');
+}
+
+function applyStickiesToHeaders($){
+
+    function scrollTop(){
+        let navbarThickness = 52;
+       return $(window).scrollTop() + navbarThickness;
+    }
+    var stickyHeaders = (function() {
+
+        var $window = $(window),
+            $stickies;
+        
+        var load = function(stickies) {
+        
+          if (typeof stickies === "object" && stickies instanceof jQuery && stickies.length > 0) {
+        
+            $stickies = stickies.each(function() {
+        
+              var $thisSticky = $(this).wrap('<div class="followWrap" />');
+        
+              $thisSticky
+                  .data('originalPosition', $thisSticky.offset().top)
+                  .data('originalHeight', $thisSticky.outerHeight())
+                    .parent()
+                    .height($thisSticky.outerHeight()); 			  
+            });
+        
+            $window.off("scroll.stickies").on("scroll.stickies", function() {
+            _whenScrolling();		
+            });
+          }
+        };
+        
+        var _whenScrolling = function() {
+        
+          $stickies.each(function(i) {			
+        
+            var $thisSticky = $(this),
+                $stickyPosition = $thisSticky.data('originalPosition');
+        
+            if ($stickyPosition <= scrollTop())  {        
+              
+              var $nextSticky = $stickies.eq(i + 1),
+                  $nextStickyPosition = $nextSticky.data('originalPosition') - $thisSticky.data('originalHeight');
+        
+              $thisSticky.addClass("fixed");
+        
+              if ($nextSticky.length > 0 && $thisSticky.offset().top >= $nextStickyPosition) {
+        
+                $thisSticky.addClass("absolute").css("top", $nextStickyPosition);
+              }
+        
+            } else {
+              
+              var $prevSticky = $stickies.eq(i - 1);
+        
+              $thisSticky.removeClass("fixed");
+        
+              if ($prevSticky.length > 0 && scrollTop() <= $thisSticky.data('originalPosition') - $thisSticky.data('originalHeight')) {
+        
+                $prevSticky.removeClass("absolute").removeAttr("style");
+              }
+            }
+          });
+        };
+        
+        return {
+          load: load
+        };
+        })();
+        
+        $(function() {
+        stickyHeaders.load($(".commentable-section"));
+        });
 }
 
 function initOther(){

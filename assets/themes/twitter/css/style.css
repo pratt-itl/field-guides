@@ -116,8 +116,27 @@ a[data-toggle="collapse"] {
   /* border-top-style: solid; */
 }
 
+.commentable-section {
+  position: relative;
+  z-index: 100;
+  background-color: white;
+}
+
+.commentable-section.fixed {
+  position: fixed;
+  top: 0;
+  box-sizing: border-box;
+  z-index: 99;
+  width: 100%;
+
+}
+
+.commentable-section.fixed.absolute {
+  position: absolute;
+}
+
 p {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   line-height: 1.65;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -223,8 +242,8 @@ nav a {
 }
 
 .principleTable tr,
-td,
-th {
+.principleTable td,
+.principleTable th {
   border: none;
 }
 
