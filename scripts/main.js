@@ -11,7 +11,8 @@ require.config({
         "sideComments" : window.basePath + "/scripts/js/sideComments/side-comments",
         "jsTree" : window.basePath + "/scripts/js/jstree/jstree.min",
         "inView" : window.basePath + "/scripts/js/in-view/in-view.min",
-        "lodash" : "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min"
+        "lodash" : "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min",
+        "docsearch" : "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min"
     },
   
     // Sets the configuration for your third party scripts that are not AMD compatible
@@ -47,23 +48,33 @@ require.config({
     // This adds popper to the window, allowing Bootstrap to function correctly.
     map: {
         '*': {
-            'popper.js': 'popper',
-            
+            'popper.js': 'popper',         
         }
     }  
   });
 
 // Start the main app logic.
-requirejs(['jquery', 'bootstrap', 'jsTree', 'sideComments', 'firebase', 'moment', 'blueImp', 'mCustomScrollbar', 'popper'],
-function   ($,        bootstrap,   jsTree,   sideComments,   firebase,   moment,   blueimp,   mCustomScrollbar,   popper) {
+requirejs(['jquery', 'bootstrap', 'jsTree', 'sideComments', 'firebase', 'moment', 'blueImp', 'mCustomScrollbar', 'popper', 'docsearch'],
+function   ($,        bootstrap,   jsTree,   sideComments,   firebase,   moment,   blueimp,   mCustomScrollbar,   popper, dsearch) {
     // Add jquery to window
     window.$ = $;
     initJsTree($,jsTree);
     initMCustomScrollbar($, mCustomScrollbar);
     initOther($);
+    initDocsearch(dsearch)
     initCommentableSections($,sideComments, firebase);
     // applyStickiesToHeaders($); Disabled due to page size changes
 });
+
+function initDocsearch(ds){
+    console.log("This is DOCSEARCH!", ds);
+    ds({ 
+              apiKey: 'cefac98b8e1c269bdea87e4e4fe915f5', 
+              indexName: 'itl', 
+              inputSelector: '#fgdocsearch', 
+              debug: false // Set debug to true if you want to inspect the dropdown 
+            }); 
+}
 
 function initCommentableSections($, SideComments, firebase){
     $(function(){
