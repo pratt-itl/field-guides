@@ -4,15 +4,14 @@ require.config({
         "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min",
         "bootstrap": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min",
         "firebase" : "https://www.gstatic.com/firebasejs/5.8.3/firebase",
-        "moment" : "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment",
         "blueImp" : "https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.1.0/js/md5",
         "mCustomScrollbar" : "https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min",
         "popper" : "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper",
         "sideComments" : window.basePath + "/scripts/js/sideComments/side-comments",
         "jsTree" : window.basePath + "/scripts/js/jstree/jstree.min",
-        "inView" : window.basePath + "/scripts/js/in-view/in-view.min",
         "lodash" : "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min",
-        "docsearch" : "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min"
+        "docsearch" : "https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min",
+        "tocbot" : window.basePath + "/scripts/js/tocbot/tocbot.min",
     },
   
     // Sets the configuration for your third party scripts that are not AMD compatible
@@ -29,9 +28,6 @@ require.config({
         "firebase" : {
             deps:["jquery"]
         },
-        "moment" : {
-            deps:["jquery"]
-        },
         "popper" : {
             deps:["jquery"]
         },
@@ -41,30 +37,66 @@ require.config({
         "lodash" : {
             deps:["jquery"]
         },
-        "inView" : {
-            deps:["jquery"]
-        }
     },
     // This adds popper to the window, allowing Bootstrap to function correctly.
     map: {
         '*': {
-            'popper.js': 'popper',         
+            'popper.js': 'popper',
+            'tocbot.min.js': 'tocbot'         
         }
     }  
   });
 
 // Start the main app logic.
-requirejs(['jquery', 'bootstrap', 'jsTree', 'sideComments', 'firebase', 'moment', 'blueImp', 'mCustomScrollbar', 'popper', 'docsearch'],
-function   ($,        bootstrap,   jsTree,   sideComments,   firebase,   moment,   blueimp,   mCustomScrollbar,   popper, dsearch) {
+requirejs(['jquery', 'bootstrap', 'jsTree', 'sideComments', 'firebase', 'mCustomScrollbar', 'popper', 'docsearch', 'tocbot'],
+function   ($,        bootstrap,   jsTree,   sideComments,   firebase,   mCustomScrollbar,   popper,  dsearch, tocbot    ) {
     // Add jquery to window
     window.$ = $;
+
     initJsTree($,jsTree);
     initMCustomScrollbar($, mCustomScrollbar);
     initOther($);
     initDocsearch(dsearch)
     initCommentableSections($,sideComments, firebase);
+    initTocBot($);
     // applyStickiesToHeaders($); Disabled due to page size changes
 });
+
+function initTocBot($){
+    $(function(){
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '.table-of-contents',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: '.content-main',
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h1, h2, h3',
+            // Element to add the positionFixedClass to.
+            positionFixedSelector: null,
+            // Fixed position class to add to make sidebar fixed after scrolling
+            // down past the fixedSidebarOffset.
+            positionFixedClass: 'is-position-fixed',
+            // fixedSidebarOffset can be any number but by default is set
+            // to auto which sets the fixedSidebarOffset to the sidebar
+            // element's offsetTop from the top of the document on init.
+            fixedSidebarOffset: 'auto',
+            // includeHtml can be set to true to include the HTML markup from the
+            // heading node instead of just including the textContent.
+            includeHtml: false,
+            // onclick function to apply to all links in toc. will be called with
+            // the event as the first parameter, and this can be used to stop,
+            // propagation, prevent default or perform action
+            onClick: false,
+            // orderedList can be set to false to generate unordered lists (ul)
+            // instead of ordered lists (ol)
+            orderedList: true,
+            collapseDepth: 4,
+            // Smooth scrolling enabled.
+            scrollSmooth: true,
+          });
+    })
+}
+
 
 function initDocsearch(ds){
     console.log("This is DOCSEARCH!", ds);

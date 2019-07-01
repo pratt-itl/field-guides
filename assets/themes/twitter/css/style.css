@@ -118,15 +118,12 @@ a[data-toggle="collapse"] {
 
 .commentable-section {
   position: relative;
-  z-index: 100;
-  background-color: white;
 }
 
 .commentable-section.fixed {
   position: fixed;
   top: 0;
   box-sizing: border-box;
-  z-index: 99;
   width: 100%;
 
 }
@@ -146,7 +143,7 @@ p {
 h1 {
   font-size: 4.8rem;
   color: rgb(44, 44, 44);
-  text-rendering: geometricPrecision;
+  /* text-rendering: geometricPrecision; // LOOKS BAD WHEN SIDEBAR OPENS/COLLAPSES */
   font-family: 'Inconsolata', monospace;
 }
 
@@ -264,6 +261,7 @@ nav a {
   margin: 0 auto;
   min-width: 300px !important;
   max-width: 1300px !important;
+  padding-right: 165px;
 }
 
 .container-content {
@@ -394,6 +392,23 @@ blockquote p {
   line-height: 26px
 }
 
+.table-of-contents {
+  position: sticky;
+  top: 100px;
+  float: right;
+  right: 60px;
+  font-family: monospace;
+  font-size: .9em;
+}
+
+.toc-list {
+  padding-left: 30px !important;
+}
+
+.side-comment .marker {
+  top: 68px !important;
+}
+
 /*
 .##.....##.########....###....########..########.########.
 .##.....##.##.........##.##...##.....##.##.......##.....##
@@ -413,7 +428,7 @@ h5 {
 }
 
 h2 {
-  text-rendering: geometricPrecision;
+  /* text-rendering: geometricPrecision; */
   font-size: 2.3em;
   padding-bottom: 30px;
   margin-top: 60px;
@@ -424,6 +439,15 @@ h2 {
 
 h4 {
   font-size: 1.8em !important;
+}
+
+.content-main .commentable-section::before
+{
+  display: block;
+  content: " ";
+  height: 60px;
+  /* margin-top: 30px; */
+  visibility: hidden;
 }
 
 /*
@@ -511,7 +535,7 @@ pre {
 }
 
 li a {
-  font-size: 1em;
+  font-size: 0.9em;
 }
 
 .aka {

@@ -25,7 +25,7 @@
   <link href="{{ ASSET_PATH }}/css/fonts.css" rel="stylesheet" type="text/css" media="all">
   <link href="{{ ASSET_PATH }}/css/images.css" rel="stylesheet" type="text/css" media="all">
   <link href="{{ BASE_PATH }}/assets/themes/scripts/vakata-tree/themes/default/style.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -174,8 +174,6 @@
     </nav>
     <!-- CONTENT (post.html, home.html, etc.) -->
     <div id="content">
-
-
        <!-- TOP NAV -->
     <nav class="navbar itl-top-nav navbar-expand-lg sticky-top navbar-light bg-light">
       <!-- SIDEBAR BUTTON -->
@@ -209,14 +207,19 @@
 
     </nav>
 
+    <!-- TOC -->
+    <div class="table-of-contents"></div>  
+
       <!-- CORNER ITL LOGO -->
       <div class="bottom-right">
         <img src="https://lelandjobson.github.io/github_pages_tut_01/assets/images/global/itl_black_clear.png">
       </div>
 
       <!-- CONTENT -->
-      <div class="container container-narrow content-wrapper">     
-        {{ content }}
+      <div class="container container-narrow content-wrapper"> 
+        <div class="content-main">
+            {{ content }}
+        </div>  
       </div>
     </div>
 
