@@ -8,7 +8,7 @@ Deploys to [Github Pages](https://pratt-itl.github.io/field-guides/) and [Netlif
 
 # How to Contribute
 
-Visit the [How To Contribute]() page.
+Visit the [How To Contribute](https://github.com/pratt-itl/field-guides/blob/master/contribute.md) page.
 
 # About
 
