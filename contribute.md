@@ -8,8 +8,7 @@ We accept all contributions to the field guide and catagorize them as such:
 
 # New Content
 
-Content on the field guides can be added via correspondence with the the ITL team or by pull request to this repository.
-Complete the below checklist to ensure that your content follows our guidelines, then follow the steps to submit.
+Content on the field guides can be added via correspondence with the the ITL team.
 
 ### Submission Format
 We accept content submissions as **.pdf** and **google doc**.
