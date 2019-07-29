@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5bbebed9-228b-48b8-a9aa-8b7787115731/deploy-status)](https://app.netlify.com/sites/future-craft-field-guides/deploys)
+
 # Future Craft Field Guides
 
 Or FCFG for short: A design technology knowledge base created and maintained by the [ITL](https://itl.pratt.edu).
