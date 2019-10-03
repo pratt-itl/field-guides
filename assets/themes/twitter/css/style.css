@@ -150,6 +150,7 @@ h1 {
 hr {
   margin-top: 30px;
   margin-bottom: 30px;
+  border-top: 3px solid rgba(0, 20, 255, 0.73) !important;
 }
 
 table,
