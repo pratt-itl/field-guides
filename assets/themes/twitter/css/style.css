@@ -15,6 +15,15 @@ body {
   align-items: stretch;
 }
 
+.content ol {
+  font-size: 1.1rem;
+  font-family: monospace;
+}
+
+.content ul {
+  font-size: 1.1rem;
+  font-family: monospace;
+}
 
 a[data-toggle="collapse"] {
   position: relative;
@@ -38,11 +47,10 @@ a[data-toggle="collapse"] {
   color: black;
   overflow-x: hidden; /* Disable horizontal scroll */
   overflow-y: hidden;
+  /* background-color: #f6f6f64d; */
   background-color: white;
   font-family: 'Inconsolata', monospace;
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-  /* border-right: solid; 
-  border-right-color: black" */
 }
 
 .bg-light {
@@ -65,10 +73,6 @@ a[data-toggle="collapse"] {
 .content-wrapper {
   padding: 40px;
 }
-/* 
-#sidebar.active {
-  margin-left: -350px;
-} */
 
 #content{
   transition: 0.5s;
@@ -78,6 +82,7 @@ a[data-toggle="collapse"] {
 .itl-top-nav {
   border-top: black 5px solid;
   font-family: 'Inconsolata', monospace;
+  border-bottom: rgb(238, 238, 238) 2px solid;
 }
 
 .itl-top-nav .navbar-brand{
@@ -148,8 +153,8 @@ h1 {
 }
 
 hr {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 50px;
+  margin-bottom: -86px;
   border-top: 3px solid rgba(0, 20, 255, 0.73) !important;
 }
 
@@ -263,6 +268,11 @@ nav a {
   min-width: 300px !important;
   max-width: 1300px !important;
   padding-right: 165px;
+}
+@media only screen and (max-width: 1000px) {
+  .container-narrow {
+    padding-right: 0px;
+  }
 }
 
 .container-content {
@@ -402,6 +412,12 @@ blockquote p {
   font-size: .9em;
 }
 
+@media only screen and (max-width: 1000px) {
+  .table-of-contents {
+    display: none;
+  }
+}
+
 .toc-list {
   padding-left: 30px !important;
 }
@@ -435,6 +451,15 @@ h2 {
   margin-top: 60px;
   font-size: 3.4em;
   font-family: 'Inconsolata', monospace;
+}
+
+h3{
+  border-top: #000cff;
+  font-family: monospace;
+  border-top-style: dotted;
+  margin-top: 40px;
+  font-size: 2.7rem;
+  width: 75%;
 }
 
 
