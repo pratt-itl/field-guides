@@ -268,8 +268,7 @@ Once you're set up with the above steps, from Connection to implementing your to
 <iframe src="https://player.vimeo.com/video/261402433" width="640" height="1138" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 <p><a href="https://vimeo.com/261402433">ITL Robot Penholder Hello World</a> from <a href="https://vimeo.com/user7298135">Leland Jobson</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
-<div class="alert alert-success"><strong>Way to go!
-</strong> Congratulations on sending your first program.</div>
+<div class="alert alert-success">Congratulations on sending your first program.</div>
 
 
 

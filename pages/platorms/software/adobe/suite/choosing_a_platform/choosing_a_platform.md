@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction
+title: Choosing an Adobe Platform
 description: A top level introduction to the adobe suite and its products.
 field-guide: Adobe Field Guide
 category: Platforms

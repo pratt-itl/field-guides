@@ -2,26 +2,42 @@
 <div class="container container-narrow">
   <!-- <p style="color: rgb(200,200,200); float: right; padding-right: 40px;">{{ page.field-guide | remove: 'Field Guide' }}</p> -->
   <div class="content">
+    <div style="float: right">
+      <p style="
+      padding: 5px; 
+      font-size: 1rem;
+      background-color: rgb(17, 39, 51); 
+      color: white">
+      {{ page.field-guide }}
+      </p>
+    </div>
     <div class="page-header">
       <h1>{{ page.title }}</h1>
+      {% if page.description %}
+      <div class="page-description">
+        <p>
+          {{ page.description }}
+        </p>
+      </div>
+      {% endif %}
       {% if page.author %}
       <p style="color: #6e6e6e;padding-top: 40px;font-size: 19px;font-family: monospace">
-          Author(s): {{ page.author}}
+        Author(s): {{ page.author}}
       </p>
       {% endif %}
     </div>
     <div class="row-fluid post-full">
       <div class="span12">
-        <div id="commentable-area" class="content">   
+        <div id="commentable-area" class="content">
           {{ content }}
         </div>
       </div>
     </div>
   </div>
   <footer>
-      <p><small>
-          <a href="https://itl.pratt.edu">Interdisciplinary Technology Lab</a>
-          <br>Field Guide v.0.1.2
-        </small></p>
-    </footer>
+    <p><small>
+        <a href="https://itl.pratt.edu">Interdisciplinary Technology Lab</a>
+        <br>Field Guide v.0.1.2
+      </small></p>
+  </footer>
 </div>

@@ -271,7 +271,7 @@ nav a {
 }
 @media only screen and (max-width: 1000px) {
   .container-narrow {
-    padding-right: 0px;
+    padding-right: 30px;
   }
 }
 
@@ -416,6 +416,9 @@ blockquote p {
   .table-of-contents {
     display: none;
   }
+  .container-narrow {
+    margin-right: inherit;
+  }
 }
 
 .toc-list {
@@ -526,16 +529,13 @@ pre {
 }
 
 .page-header {
-  padding-bottom: 50px;
+  padding-bottom: 40px;
   /* text-align: center; */
   font-style: italic;
 }
 
-.principle-desription {
-  font-family: 'Frank Ruhl Libre', serif;
-  font-size: 40px;
-  line-height: 40px;
-  color: gray;
+.page-desription {
+  color: gray !important;
 }
 
 /*

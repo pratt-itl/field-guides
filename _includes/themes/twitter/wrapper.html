@@ -10,7 +10,7 @@
 
   <!-- Enable responsive viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
   <!-- Pass jekyll template into global scope -->
   <script>
     window.basePath = "{{ BASE_PATH }}";
@@ -59,7 +59,9 @@
       document.getElementById("sidebarCollapse").onclick = closeNav;
       document.getElementById("sidebarBtn").classList.remove("fa-book");
       document.getElementById("sidebarBtn").classList.add("fa-book-open");
-      
+      // document.getElementById("content-area").style.marginRight = "0px";
+      // document.getElementById("table-of-contents").style.width = "0px";
+
       // if (window.innerWidth < 1400) {
       //   document.getElementById("magCards").classList.remove('card-deck');
       //   document.getElementById("magCards").classList.add('card-columns');
@@ -70,10 +72,13 @@
     function closeNav() {
       document.getElementById("sidebar").style.width = "0";
       document.getElementById("sidebar").classList.remove("sidebar-open");
-      document.getElementById("content").style.marginLeft = "0";      
+      document.getElementById("content").style.marginLeft = "0";
       document.getElementById("sidebarCollapse").onclick = openNav;
       document.getElementById("sidebarBtn").classList.remove("fa-book-open");
       document.getElementById("sidebarBtn").classList.add("fa-book");
+      // document.getElementById("content-area").style.marginRight = "165px";
+      // document.getElementById("table-of-contents").style.width = "auto";
+
       // if (window.innerWidth < 1400) {
       //   document.getElementById("magCards").classList.add('card-deck');
       //   document.getElementById("magCards").classList.remove('card-columns');
@@ -82,7 +87,7 @@
   </script>
 
   <!-- Docsearch -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 </head>
 
 <body>
@@ -93,91 +98,91 @@
     <nav id="sidebar">
       <div id="sidebar-content">
         <div style="padding-left: 20px; padding-bottom: 20px;">
-            <h4>Field Guides</h4>
+          <h4>Guide Nav</h4>
         </div>
         <!-- TREE NAVIGATION -->
         <div id="jsTreeNav" class="sidenav">
-            <ul>
-              {% assign myCats = site.pages | group_by: 'category' %}
-              {% for cat in myCats %}
-              <!-- Create the category header -->
-              {% if cat.name != "" %}
-              <li data-jstree='{"opened":true, "icon":"fa fa-cubes"}'>{{ cat.name}}
-                <ul>
-                  {% assign subCats = cat.items | group_by: 'subcategory' %}
-                  {% for subcat in subCats %}
+          <ul>
+            {% assign myCats = site.pages | group_by: 'category' %}
+            {% for cat in myCats %}
+            <!-- Create the category header -->
+            {% if cat.name != "" %}
+            <li data-jstree='{"opened":true, "icon":"fa fa-cubes"}'>{{ cat.name}}
+              <ul>
+                {% assign subCats = cat.items | group_by: 'subcategory' %}
+                {% for subcat in subCats %}
 
-                  {% if subcat.name != "None" %}
+                {% if subcat.name != "None" %}
 
-                  {% assign items = subcat.items | sort: 'order' %}
+                {% assign items = subcat.items | sort: 'order' %}
 
-                  {% if page.field-guide == subcat.name %}
-                  <li data-jstree='{"opened":true, "icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name
+                {% if page.field-guide == subcat.name %}
+                <li data-jstree='{"opened":true, "icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name
                   }} Guides
+                  {% else %}
+                <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }} Guides
+                  {% endif %}
+                  <ul>
+                    {% for item in items %}
+                    <!-- {% capture nowunix %}{{'now' | date: '%s'}}{% endcapture %} -->
+
+                    {% if item.title == "Quick Start" %}
+
+                    {% if item.url == page.url %}
+                    <li data-jstree='{"selected":true,"icon":"fa fa-bolt"}' class="nav-item current newItem"><a>{{
+                        item.title }}</a></li>
                     {% else %}
-                  <li data-jstree='{"icon":"fa fa-book"}' class="nav-header currentguide">{{ subcat.name }} Guides
+                    <li data-jstree='{"icon":"fa fa-bolt"}' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
+                        item.title }}</a></li>
                     {% endif %}
-                    <ul>
-                      {% for item in items %}
-                      <!-- {% capture nowunix %}{{'now' | date: '%s'}}{% endcapture %} -->
 
-                      {% if item.title == "Quick Start" %}
+                    {% else %}
 
-                      {% if item.url == page.url %}
-                      <li data-jstree='{"selected":true,"icon":"fa fa-bolt"}' class="nav-item current newItem"><a>{{
+                    {% case cat.name %}
+                    {% when 'Principles' %}
+                    {% assign myIcon = '"fa fa-code-branch"' %}
+                    {% when 'Processes' %}
+                    {% assign myIcon = '"fa fa-link"' %}
+                    {% when 'Projects' %}
+                    {% assign myIcon = '"fa fa-project-diagram"' %}
+                    {% when 'Platforms' %}
+                    {% capture myIcon %}
+                    "{{ BASE_PATH }}{{ item.dir }}/{{ item.title | downcase }}.png"
+                    {% endcapture %}
+                    {% else %}
+                    {% assign myIcon = "fa fa-book" %}
+                    {% endcase %}
+
+                    {% if item.url == page.url %}
+                    <li data-jstree='{"selected":true,"icon":{{ myIcon }} }' class="nav-item current newItem"><a>{{
                         item.title }}</a></li>
-                      {% else %}
-                      <li data-jstree='{"icon":"fa fa-bolt"}' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
+                    {% else %}
+                    <li data-jstree='{"icon":{{ myIcon }} }' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
                         item.title }}</a></li>
-                      {% endif %}
-
-                      {% else %}
-
-                      {% case cat.name %}
-                      {% when 'Principles' %}
-                      {% assign myIcon = '"fa fa-code-branch"' %}
-                      {% when 'Processes' %}
-                      {% assign myIcon = '"fa fa-link"' %}
-                      {% when 'Projects' %}
-                      {% assign myIcon = '"fa fa-project-diagram"' %}
-                      {% when 'Platforms' %}
-                      {% capture myIcon %}
-                      "{{ BASE_PATH }}{{ item.dir }}/{{ item.title | downcase }}.png"
-                      {% endcapture %}
-                      {% else %}
-                      {% assign myIcon = "fa fa-book" %}
-                      {% endcase %}
-
-                      {% if item.url == page.url %}
-                      <li data-jstree='{"selected":true,"icon":{{ myIcon }} }' class="nav-item current newItem"><a>{{
-                        item.title }}</a></li>
-                      {% else %}
-                      <li data-jstree='{"icon":{{ myIcon }} }' class="nav-item"><a href="{{ BASE_PATH }}{{ item.url }}">{{
-                        item.title }}</a></li>
-                      {% endif %}
-
-                      {% endif %}
-
-                      {% endfor %}
-
-                    </ul>
                     {% endif %}
-                  </li>
-                  {% endfor %}
-                </ul>
-              </li>
-              {% endif %}
-              {% endfor %}
-            </ul>
-          </div>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                  </ul>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </nav>
     <!-- CONTENT (post.html, home.html, etc.) -->
     <div id="content">
-       <!-- TOP NAV -->
-    <nav class="navbar itl-top-nav navbar-expand-lg sticky-top navbar-light bg-light">
-      <!-- SIDEBAR BUTTON -->
-      <button onclick="openNav()" id="sidebarCollapse" class="btn btn-outline-secondary my-2 my-sm-0" type="button">
+      <!-- TOP NAV -->
+      <nav class="navbar itl-top-nav navbar-expand-lg sticky-top navbar-light bg-light">
+        <!-- SIDEBAR BUTTON -->
+        <button onclick="openNav()" id="sidebarCollapse" class="btn btn-outline-secondary my-2 my-sm-0" type="button">
           <i id="sidebarBtn" class="fa fa-book"></i>
         </button>
         <a class="navbar-brand" href="{{ BASE_PATH }}">Future Craft Field Guides</a>
@@ -200,26 +205,26 @@
           </ul>
 
           <form class="form-inline my-2 my-lg-0">
-            <input id="fgdocsearch" class="form-control mr-sm-4" type="search" placeholder="Search v.10.2.1" aria-label="Search">
+            <input id="fgdocsearch" class="form-control mr-sm-4" type="search" placeholder="Search v.10.2.1"
+              aria-label="Search">
             <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
           </form>
         </div>
 
-    </nav>
+      </nav>
 
-    <!-- TOC -->
-    <div class="table-of-contents"></div>  
-
+      <!-- TOC -->
+      <div class="table-of-contents"></div>
       <!-- CORNER ITL LOGO -->
       <div class="bottom-right">
         <img src="https://lelandjobson.github.io/github_pages_tut_01/assets/images/global/itl_black_clear.png">
       </div>
 
       <!-- CONTENT -->
-      <div class="container container-narrow content-wrapper"> 
+      <div id="content-area" class="container container-narrow content-wrapper">
         <div class="content-main">
-            {{ content }}
-        </div>  
+          {{ content }}
+        </div>
       </div>
     </div>
 
